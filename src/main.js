@@ -1,4 +1,4 @@
-import $ from 'jquery';
+import $, { data } from 'jquery';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/styles.css';
@@ -10,7 +10,7 @@ $(document).ready(function() {
     $('search').val("");
 
     let request = new XMLHttpRequest();
-    const url = `http://api.giphy.com/v1/gifs/search?q=${gif}&api_key=${process.env.API_KEY}&limit=5`;
+    const url = `http://api.giphy.com/v1/gifs/search?q=${gif}&api_key=${process.env.API_KEY}&limit=10`;
     
     request.onreadystatechange = function() {
       if (this.readyState === 4 && this.status === 200) {
@@ -22,12 +22,16 @@ $(document).ready(function() {
     request.open("GET", url, true);
     request.send();
 
+
     function getElements(response) {
-      $("ul#giphyPics").append(`<img src="${response.data[0].images.original.url}">`);
+      var arrayD = url;
+      for (let i = 0; i <= arrayD.length; i++) {
+        $("ul#giphyPics").append(`<img src="${response.data[i].images.original.url}">`);
+      }
     }
   });
 
-//////////////////-------------------------------------------------------------------------
+  //////////////////-------------------------------------------------------------------------
 
   $("#trendButton").click(function() {
     
